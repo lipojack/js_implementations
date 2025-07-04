@@ -10,3 +10,6 @@ export const throttle = (fn, delay) => {
     }
   }
 }
+
+// TODOs:
+// leading, trailing
