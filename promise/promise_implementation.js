@@ -162,5 +162,24 @@ export class MyPromise {
       });
     });
   }
+
+  static any(promises) {
+    return new MyPromise((resolve, reject) => {
+      if (promises.length == 0) return reject(new AggregateError([])); 
+      const reasons = new Array(promises.length);
+      let failed = 0;
+      promises.forEach((promise, index) => {
+        MyPromise.resolve(promise)
+          .then(
+            (res) => resolve(res),
+            (err) => {
+              reasons[index] = err;
+              failed++;
+              if (failed == promises.length) reject(new AggregateError(reasons));
+            }
+          );
+      });
+    });
+  }
 }
 
