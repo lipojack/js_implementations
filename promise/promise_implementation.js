@@ -105,8 +105,9 @@ export class MyPromise {
 
   static all(promises) {
     return new MyPromise((resolve, reject) => {
+      // .all([]) should resolve [], since no promise to be waited
       if (promises.length == 0) return resolve([]);
-      let results = new Array(promises.length);
+      const results = new Array(promises.length);
       let completed = 0;
       promises.forEach((promise, index) => {
         MyPromise.resolve(promise)
@@ -119,6 +120,19 @@ export class MyPromise {
             (err) => {
               reject(err);
             }
+          );
+      });
+    });
+  }
+
+  static race(promises) {
+    // .race([]) should return a non-fulfilled promise, since no first finished promise
+    return new MyPromise((resolve, reject) => {
+      promises.forEach((promise) => {
+        MyPromise.resolve(promise)
+          .then(
+            (res) => resolve(res),
+            (err) => reject(err)
           );
       });
     });
