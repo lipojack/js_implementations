@@ -137,5 +137,30 @@ export class MyPromise {
       });
     });
   }
+
+  static allSettled(promises) {
+    return new MyPromise((resolve) => {
+      if (promises.length == 0) return resolve([]);
+      const results = new Array(promises.length);
+      let completed = 0;
+
+      promises.forEach((promise, index) => {
+        MyPromise.resolve(promise)
+          .then(
+            (res) => {
+              // allSettled expect the object with status and value/reason
+              results[index] = { status: "fulfilled", value: res};
+              completed++;
+              if (completed == promises.length) resolve(results);
+            },
+            (err) => {
+              results[index] = { status: "rejected", reason: err};
+              completed++;
+              if (completed == promises.length) resolve(results);
+            }
+          );
+      });
+    });
+  }
 }
 
