@@ -102,5 +102,26 @@ export class MyPromise {
       }
     );
   }
+
+  static all(promises) {
+    return new MyPromise((resolve, reject) => {
+      if (promises.length == 0) return resolve([]);
+      let results = new Array(promises.length);
+      let completed = 0;
+      promises.forEach((promise, index) => {
+        MyPromise.resolve(promise)
+          .then(
+            (res) => {
+              results[index] = res;
+              completed++;
+              if (completed == promises.length) resolve(results);
+            },
+            (err) => {
+              reject(err);
+            }
+          );
+      });
+    });
+  }
 }
 
