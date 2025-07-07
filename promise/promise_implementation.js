@@ -1,5 +1,5 @@
 // Implemeted promise
-class MyPromise {
+export class MyPromise {
   constructor(executer) {
     this.state = "pending"; // or "fulfilled" or "rejected"
     this.value = undefined;
@@ -8,15 +8,15 @@ class MyPromise {
     const resolve = (val) => {
       if (this.state !== "pending") return;
       this.state = "fulfilled";
-      this.value = val
+      this.value = val;
       this.thenCallbacks.forEach((cb) => cb(val));
-    }
+    };
     const reject = (reason) => {
       if (this.state !== "pending") return;
       this.state = "rejected";
       this.value = reason;
       this.catchCallbacks.forEach((cb) => cb(reason));
-    }
+    };
     try {
       executer(resolve, reject);
     } catch (err) {
@@ -41,7 +41,7 @@ class MyPromise {
         } catch (err) {
           reject(err);
         }
-      }
+      };
       const handleReject = (reason) => {
         try {
           if (onRejected) {
@@ -68,19 +68,19 @@ class MyPromise {
         } catch (err) {
           reject(err);
         }
-      }
+      };
       switch (this.state) {
-        case "fulfilled":
-          handleFulfill(this.value);
-          break;
-        case "rejected":
-          handleReject(this.value);
-          break;
-        default:
-          this.thenCallbacks.push(handleFulfill);
-          this.catchCallbacks.push(handleReject);
+      case "fulfilled":
+        handleFulfill(this.value);
+        break;
+      case "rejected":
+        handleReject(this.value);
+        break;
+      default:
+        this.thenCallbacks.push(handleFulfill);
+        this.catchCallbacks.push(handleReject);
       }
-    })
+    });
   }
   // the this refers to current promise, which is "p"
   // p.catch(onRejected) implies p.then(null, onRejected)
@@ -98,7 +98,7 @@ class MyPromise {
       (err) => {
         return MyPromise.resolve(finalCallback()).then(() => {
           throw err;
-        })
+        });
       }
     );
   }

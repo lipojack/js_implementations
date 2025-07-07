@@ -43,4 +43,4 @@ export const useThrottle = (fn, delay) => {
   useEffect(() => cancel, [cancel]);
 
   return { throttled, cancel };
-}
+};

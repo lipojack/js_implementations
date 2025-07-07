@@ -24,7 +24,7 @@ const enqueueReq = (fn) => {
     } else {
       queue.push(run);
     }
-  })
+  });
 };
 
 // usage

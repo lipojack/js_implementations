@@ -9,8 +9,8 @@ export const debounce = (fn, delay) => {
       fn.apply(context, args);
       // For straightforward function, but the fn does not have ability to access it's attributes
       // fn(...args);
-    }, delay)
-  }
+    }, delay);
+  };
 };
 
 

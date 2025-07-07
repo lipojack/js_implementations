@@ -8,8 +8,8 @@ export const throttle = (fn, delay) => {
       fn.apply(context, args);
       lastCall = now;
     }
-  }
-}
+  };
+};
 
 // TODOs:
 // leading, trailing
