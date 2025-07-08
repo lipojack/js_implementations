@@ -1,6 +1,6 @@
 import { useEffect, useRef, useCallback } from "react";
 
-export const useThrottle = (fn, delay) => {
+export const useThrottleFn = (fn, delay) => {
   const lastCall = useRef(0);
   const latestFn = useRef(fn);
   const timer = useRef(null);

@@ -1,6 +1,6 @@
 import { onUnmounted, watch, isRef } from "vue";
 
-export const useDebounce = (fn, delay) => {
+export const useDebounceFn = (fn, delay) => {
   let timer = null;
   
   // check if fn, delay is reactive
