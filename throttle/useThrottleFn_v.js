@@ -1,4 +1,4 @@
-import { onUnmounted, isRef, watch } from "vue";
+import { onUnmounted, isRef, watch, ref } from "vue";
 
 export const useThrottleFn = (fn, delay) => {
   
@@ -38,4 +38,20 @@ export const useThrottleFn = (fn, delay) => {
   onUnmounted(cancel);
 
   return { throttled, cancel };
+};
+
+export const useThrottleVal = (sourceRef, delay) => {
+  let lastCall = 0;
+  const throttled = ref(sourceRef.value);
+
+  watch(sourceRef, (val) => {
+    const now = Date.now();
+    const sinceLastcall = now - lastCall;
+    if (sinceLastcall >= delay) {
+      throttled.value = val;
+      lastCall = now;
+    }
+  });
+
+  return throttled;
 };

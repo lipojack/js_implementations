@@ -1,4 +1,4 @@
-import { onUnmounted, watch, isRef } from "vue";
+import { onUnmounted, watch, isRef, ref } from "vue";
 
 export const useDebounceFn = (fn, delay) => {
   let timer = null;
@@ -27,4 +27,24 @@ export const useDebounceFn = (fn, delay) => {
   onUnmounted(cancel);
   
   return { debounced, cancel };
+};
+
+export const useDebounceVal = (sourceRef, delay) => {
+  let timer = null;
+  // make the debounced reactive for consumers
+  const debounced = ref(sourceRef.value);
+  
+  watch(sourceRef, (val) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      debounced.value = val; 
+    }, delay);
+  });
+
+  onUnmounted(() => {
+    clearTimeout(timer);
+    timer = null;
+  });
+
+  return debounced;
 };
