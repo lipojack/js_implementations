@@ -1,5 +1,5 @@
 // debounce handles repeated calls, adopt last call and run after delay
-export const debounce = (fn, delay) => {
+export const debounceFn = (fn, delay) => {
   let timer;
   return (...args) => {
     const context = this; // force "this" scope to the return function, in case the setTimeout apply a class function

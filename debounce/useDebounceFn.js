@@ -1,6 +1,6 @@
 import { useRef, useEffect, useCallback } from 'react';
 
-export const useDebounce = (fn, delay) => {
+export const useDebounceFn = (fn, delay) => {
   const timer = useRef(null);
   // memorize and update fn cause fn might change if parent re-render
   const latestFn = useRef(fn);
