@@ -1,7 +1,8 @@
 // debounce handles repeated calls, adopt last call and run after delay
 export const debounceFn = (fn, delay) => {
   let timer;
-  return (...args) => {
+  // use class function instead of arrow function. arrow's this cannot refer to original caller
+  return function (...args) {
     const context = this; // force "this" scope to the return function, in case the setTimeout apply a class function
     clearTimeout(timer);
     timer = setTimeout(() => {
